@@ -16,7 +16,7 @@
 
 %% API exports
 -export( [cnr/1, cnr/2] ).
--export( [intersect/1, intersect/2, union/1, union/2, subtr/1, subtr/2] ).
+-export( [intersect/1, intersect/2, union/1, union/2, subtr/1, subtr/2, eq/2] ).
 
 -ifdef( TEST ).
 -include_lib("eunit/include/eunit.hrl").
@@ -44,6 +44,13 @@ when is_integer( N ), N > 0,
      is_list( Omega ) ->
      
   cnr( N, Omega, [] ).
+
+-spec eq( L1::[_], L2::[_] ) -> boolean().
+
+eq( L1, L2 )
+when is_list( L1 ),
+     is_list( L2 ) ->
+  lists:usort( L1 ) =:= lists:usort( L2 ).
 
 
 -spec intersect( L1::[_], L2::[_] ) -> [_].
