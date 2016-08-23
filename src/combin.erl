@@ -35,10 +35,76 @@ when is_integer( N ), N > 0,
      
   cnr( N, Omega, [] ).
 
+
+-spec intersect( L1::[_], L2::[_] ) -> [_].
+
+intersect( L1, L2 )
+when is_list( L1 ),
+     is_list( L2 ) ->
+
+  A = lists:usort( L1 ),
+  B = lists:usort( L2 ),
+
+  C = A--B,
+  D = B--A,
+
+  (lists:usort( A++B )--C)--D.
+
+-spec intersect( L::[[_]] ) -> [_].
+
+intersect( [H] )
+when is_list( H ) ->
+  lists:usort( H );
+
+intersect( [H|T] )
+when is_list( H ) ->
+  intersect( H, intersect( T ) ).
+
+-spec union( L1::[_], L2::[_] ) -> [_].
+
+union( L1, L2 )
+when is_list( L1 ),
+     is_list( L2 ) ->
+
+  A = lists:usort( L1 ),
+  B = lists:usort( L2 ),
+
+  lists:usort( A++B ).
+
+-spec union( L::[[_]] ) -> [_].
+
+union( [H] )
+when is_list( H ) ->
+  lists:usort( H );
+
+union( [H|T] )
+when is_list( H ) ->
+  union( H, union( T ) ).
+
+-spec subtr( L1::[_], L2::[_] ) -> [_].
+
+subtr( L1, L2 )
+when is_list( L1 ),
+     is_list( L2 ) ->
+
+  A = lists:usort( L1 ),
+  B = lists:usort( L2 ),
+
+  A--B.
+
+-spec subtr( L::[[_]] ) -> [_].
+
+subtr( [H] ) ->
+  lists:usort( H );
+
+subtr( [H|T] ) ->
+  subtr( H, union( T ) ).
+
 %%====================================================================
 %% Internal functions
 %%====================================================================
 
+-spec cnr( N::pos_integer(), Omega0::[_], Acc::[_] ) -> [_].
 
 cnr( 0, _, Acc )
 when is_list( Acc ) ->
@@ -62,57 +128,7 @@ when is_integer( N ), N > 0,
   end.
   
 
-intersect( L1, L2 )
-when is_list( L1 ),
-     is_list( L2 ) ->
 
-  A = lists:usort( L1 ),
-  B = lists:usort( L2 ),
-
-  C = A--B,
-  D = B--A,
-
-  (lists:usort( A++B )--C)--D.
-
-intersect( [H] )
-when is_list( H ) ->
-  lists:usort( H );
-
-intersect( [H|T] )
-when is_list( H ) ->
-  intersect( H, intersect( T ) ).
-
-union( L1, L2 )
-when is_list( L1 ),
-     is_list( L2 ) ->
-
-  A = lists:usort( L1 ),
-  B = lists:usort( L2 ),
-
-  lists:usort( A++B ).
-
-union( [H] )
-when is_list( H ) ->
-  lists:usort( H );
-
-union( [H|T] )
-when is_list( H ) ->
-  union( H, union( T ) ).
-
-subtr( L1, L2 )
-when is_list( L1 ),
-     is_list( L2 ) ->
-
-  A = lists:usort( L1 ),
-  B = lists:usort( L2 ),
-
-  A--B.
-
-subtr( [H] ) ->
-  lists:usort( H );
-
-subtr( [H|T] ) ->
-  subtr( H, union( T ) ).
 
 
 %%====================================================================
