@@ -15,7 +15,7 @@
 -module( combin ).
 
 %% API exports
--export( [cnr/2] ).
+-export( [cnr/1, cnr/2] ).
 -export( [intersect/1, intersect/2, union/1, union/2, subtr/1, subtr/2] ).
 
 -ifdef( TEST ).
