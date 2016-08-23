@@ -16,6 +16,7 @@
 
 %% API exports
 -export( [cnr/2] ).
+-export( [intersect/1, intersect/2, union/1, union/2, subtr/1, subtr/2] ).
 
 -ifdef( TEST ).
 -include_lib("eunit/include/eunit.hrl").
@@ -60,6 +61,58 @@ when is_integer( N ), N > 0,
     [_|_] -> cnr( N-1, T, [H|Acc] )++cnr( N, T, Acc )
   end.
   
+
+intersect( L1, L2 )
+when is_list( L1 ),
+     is_list( L2 ) ->
+
+  A = lists:usort( L1 ),
+  B = lists:usort( L2 ),
+
+  C = A--B,
+  D = B--A,
+
+  (lists:usort( A++B )--C)--D.
+
+intersect( [H] )
+when is_list( H ) ->
+  lists:usort( H );
+
+intersect( [H|T] )
+when is_list( H ) ->
+  intersect( H, intersect( T ) ).
+
+union( L1, L2 )
+when is_list( L1 ),
+     is_list( L2 ) ->
+
+  A = lists:usort( L1 ),
+  B = lists:usort( L2 ),
+
+  lists:usort( A++B ).
+
+union( [H] )
+when is_list( H ) ->
+  lists:usort( H );
+
+union( [H|T] )
+when is_list( H ) ->
+  union( H, union( T ) ).
+
+subtr( L1, L2 )
+when is_list( L1 ),
+     is_list( L2 ) ->
+
+  A = lists:usort( L1 ),
+  B = lists:usort( L2 ),
+
+  A--B.
+
+subtr( [H] ) ->
+  lists:usort( H );
+
+subtr( [H|T] ) ->
+  subtr( H, union( T ) ).
 
 
 %%====================================================================
