@@ -27,6 +27,16 @@
 %% API functions
 %%====================================================================
 
+-spec cnr( Omega::[_] ) -> [[_]].
+
+cnr( Omega )
+when is_list( Omega ) ->
+
+  F = fun( N ) -> cnr( N, Omega ) end,
+
+  lists:flatmap( F, down_to_1( length( Omega ), [] ) ).
+
+
 -spec cnr( N::pos_integer(), Omega::[_] ) -> [[_]].
 
 cnr( N, Omega )
@@ -127,6 +137,15 @@ when is_integer( N ), N > 0,
     [_|_] -> cnr( N-1, T, [H|Acc] )++cnr( N, T, Acc )
   end.
   
+-spec down_to_1( N::non_neg_integer(), Acc::[pos_integer()] ) -> [pos_integer()].
+
+down_to_1( 0, Acc ) ->
+  Acc;
+
+down_to_1( N, Acc )
+when is_integer( N ), N > 0,
+     is_list( Acc ) ->
+  down_to_1( N-1, [N|Acc] ).
 
 
 
@@ -148,5 +167,9 @@ cnr_n_returns_one_elements_test() ->
 cnr_is_robust_wrt_duplicates_test() ->
   Omega = [a, b, c, d, e, f, f, e, b],
   ?assertEqual( 1, length( cnr( 6, Omega, [] ) ) ).
+
+cnr_all_test() ->
+  Omega = [a,b,c],
+  ?assertEqual( 3+3+1, length( cnr( Omega ) ) ).
 
 -endif.
