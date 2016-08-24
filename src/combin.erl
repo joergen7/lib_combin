@@ -17,6 +17,7 @@
 %% API exports
 -export( [cnr/1, cnr/2] ).
 -export( [intersect/1, intersect/2, union/1, union/2, subtr/1, subtr/2, eq/2] ).
+-export( [index_of/2] ).
 
 -ifdef( TEST ).
 -include_lib("eunit/include/eunit.hrl").
@@ -117,9 +118,29 @@ subtr( [H] ) ->
 subtr( [H|T] ) ->
   subtr( H, union( T ) ).
 
+
+-spec index_of( Member::_, Lst::[_] ) -> pos_integer().
+
+index_of( M, Lst )
+when is_list( Lst ) ->
+  index_of( M, Lst, 1 ).
+
 %%====================================================================
 %% Internal functions
 %%====================================================================
+
+-spec index_of( Member::_, Lst::[_], N::pos_integer() ) -> pos_integer().
+
+index_of( M, [], _ ) ->
+  error( {eexist, M} );
+
+index_of( M, [M|_], N )
+when is_integer( N ), N > 0 ->
+  N;
+
+index_of( M, [_|T], N )
+when is_integer( N ), N > 0 ->
+  index_of( M, T, N+1 ).
 
 -spec cnr( N::pos_integer(), Omega0::[_], Acc::[_] ) -> [_].
 
