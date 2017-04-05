@@ -2,7 +2,7 @@ defmodule Combin.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :combin,
+    [app: :lib_combin,
      version: "0.1.1",
      elixir: "~> 1.4.0",
      build_embedded: Mix.env == :prod,
@@ -28,10 +28,10 @@ defmodule Combin.Mixfile do
 
   defp package do
     [# These are the default files included in the package
-     name: :combin,
+     name: :lib_combin,
      files: ["lib", "priv", "mix.exs", "README*", "readme*", "LICENSE*", "license*"],
      maintainers: ["Jorgen Brandt"],
      licenses: ["Apache 2.0"],
-     links: %{"GitHub" => "https://github.com/joergen7/combin"}]
+     links: %{"GitHub" => "https://github.com/joergen7/lib_combin"}]
   end
 end

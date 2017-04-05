@@ -16,7 +16,7 @@
 
 %% @author Jörgen Brandt <joergen.brandt@onlinehome.de>
 
--module( combin ).
+-module( lib_combin ).
 
 %% API exports
 -export( [cnr/1, cnr/2, permut_map/1] ).
