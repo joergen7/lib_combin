@@ -1,6 +1,6 @@
 {application, combin,
  [{description, "Basic combinatorics for Erlang lists"},
-  {vsn, "0.1.0-snapshot"},
+  {vsn, "0.1.0-release"},
   {registered, []},
   {applications,
    [kernel,
@@ -9,7 +9,7 @@
   {env,[]},
   {modules, [combin]},
 
-  {maintainers, []},
+  {maintainers, ["Jorgen Brandt <brandjoe@hu-berlin.de>"]},
   {licenses, []},
   {links, []}
  ]}.
