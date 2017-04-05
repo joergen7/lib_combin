@@ -10,6 +10,6 @@
   {modules, [combin]},
 
   {maintainers, ["Jorgen Brandt <joergen.brandt@onlinehome.de>"]},
-  {licenses, []},
-  {links, []}
+  {licenses, ["Apache 2.0"]},
+  {links, ["https://github.com/joergen7/combin"]}
  ]}.
