@@ -69,12 +69,16 @@ cnr( N, SrcLst ) when N > 0 ->
 
 permut_map( SrcMap ) ->
 
-  F = fun
+  F = fun( _, VLst ) ->
+        lists:usort( VLst )
+      end,
+
+  G = fun
         ( K, VLst, [] )  -> [#{ K => V } || V <- VLst];
         ( K, VLst, Acc ) -> [A#{ K => V } || V <- VLst, A <- Acc]
       end,
 
-  maps:fold( F, [], SrcMap ).
+  maps:fold( G, [], maps:map( F, SrcMap ) ).
 
 
 %%====================================================================
