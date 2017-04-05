@@ -19,7 +19,7 @@
 -module( combin ).
 
 %% API exports
--export( [cnr/1, cnr/2] ).
+-export( [cnr/1, cnr/2, permut_map/1] ).
 
 -ifdef( TEST ).
 -include_lib("eunit/include/eunit.hrl").
@@ -30,23 +30,54 @@
 %% API functions
 %%====================================================================
 
--spec cnr( Omega::[_] ) -> [[_]].
+%% @doc Enumerates all possible combinations without replacement by drawing
+%%      elements from a list.
 
-cnr( Omega )
-when is_list( Omega ) ->
+-spec cnr( SrcLst::[_] ) -> [[_]].
 
-  F = fun( N ) -> cnr( N, Omega ) end,
+cnr( SrcLst )
+when is_list( SrcLst ) ->
 
-  lists:flatmap( F, lists:seq( 1, length( Omega ) ) ).
+  F = fun( N ) -> cnr( N, SrcLst ) end,
+
+  lists:flatmap( F, lists:seq( 1, length( SrcLst ) ) ).
 
 
--spec cnr( N::pos_integer(), Omega::[_] ) -> [[_]].
+%% @doc Enumerates all combinations of length `N` without replacement by drawing
+%%      elements from a list.
 
-cnr( N, Omega )
+-spec cnr( N::pos_integer(), SrcLst::[_] ) -> [[_]].
+
+cnr( N, SrcLst )
 when is_integer( N ), N > 0,
-     is_list( Omega ) ->
+     is_list( SrcLst ) ->
+
+  Cnr = fun
+          Cnr( 0, _, Acc )     -> [Acc];
+          Cnr( _, [], _ )      -> [];
+          Cnr( M, [H|T], Acc ) ->
+            case T of
+              []    -> Cnr( M-1, [], [H|Acc] );
+              [_|_] -> Cnr( M-1, T, [H|Acc] )++Cnr( M, T, Acc )
+            end
+        end,
      
-  cnr( N, Omega, [] ).
+  Cnr( N, lists:usort( SrcLst ), [] ).
+
+
+%% @doc Enumerates all possible permutations by drawing one element from each
+%%      list value of a given map `SrcMap`.
+
+-spec permut_map( #{ _ => [_] } ) -> [#{ _ => _ }].
+
+permut_map( SrcMap ) when is_map( SrcMap ) ->
+
+  F = fun
+        ( K, VLst, [] )  -> [#{ K => V } || V <- VLst];
+        ( K, VLst, Acc ) -> [A#{ K => V } || V <- VLst, A <- Acc]
+      end,
+
+  maps:fold( F, [], SrcMap ).
 
 
 %%====================================================================
@@ -54,29 +85,9 @@ when is_integer( N ), N > 0,
 %%====================================================================
 
 
--spec cnr( N::pos_integer(), Omega0::[_], Acc::[_] ) -> [_].
 
-cnr( 0, _, Acc )
-when is_list( Acc ) ->
-  [Acc];
 
-cnr( _, [], _ ) ->
-  [];
 
-cnr( N, Omega0, Acc ) 
-when is_integer( N ), N > 0,
-     is_list( Omega0 ),
-     is_list( Acc ) ->
-
-  Omega = lists:usort( Omega0 ),
-
-  [H|T] = Omega,
-
-  case T of
-    []    -> cnr( N-1, [], [H|Acc] );
-    [_|_] -> cnr( N-1, T, [H|Acc] )++cnr( N, T, Acc )
-  end.
-  
 
 
 
@@ -89,19 +100,19 @@ when is_integer( N ), N > 0,
 -ifdef( TEST ).
 
 cnr_one_returns_n_elements_test() ->
-  Omega = [a, b, c, d, e, f],
-  ?assertEqual( 6, length( cnr( 1, Omega, [] ) ) ).
+  SrcLst = [a, b, c, d, e, f],
+  ?assertEqual( 6, length( cnr( 1, SrcLst ) ) ).
 
 cnr_n_returns_one_elements_test() ->
-  Omega = [a, b, c, d, e, f],
-  ?assertEqual( 1, length( cnr( 6, Omega, [] ) ) ).
+  SrcLst = [a, b, c, d, e, f],
+  ?assertEqual( 1, length( cnr( 6, SrcLst ) ) ).
 
 cnr_is_robust_wrt_duplicates_test() ->
-  Omega = [a, b, c, d, e, f, f, e, b],
-  ?assertEqual( 1, length( cnr( 6, Omega, [] ) ) ).
+  SrcLst = [a, b, c, d, e, f, f, e, b],
+  ?assertEqual( 1, length( cnr( 6, SrcLst ) ) ).
 
 cnr_all_test() ->
-  Omega = [a,b,c],
-  ?assertEqual( 3+3+1, length( cnr( Omega ) ) ).
+  SrcLst = [a,b,c],
+  ?assertEqual( 3+3+1, length( cnr( SrcLst ) ) ).
 
 -endif.
