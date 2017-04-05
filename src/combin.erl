@@ -35,8 +35,7 @@
 
 -spec cnr( SrcLst::[_] ) -> [[_]].
 
-cnr( SrcLst )
-when is_list( SrcLst ) ->
+cnr( SrcLst ) ->
 
   F = fun( N ) -> cnr( N, SrcLst ) end,
 
@@ -46,11 +45,9 @@ when is_list( SrcLst ) ->
 %% @doc Enumerates all combinations of length `N` without replacement by drawing
 %%      elements from a list.
 
--spec cnr( N::pos_integer(), SrcLst::[_] ) -> [[_]].
+-spec cnr( N::_, SrcLst::[_] ) -> [[_]].
 
-cnr( N, SrcLst )
-when is_integer( N ), N > 0,
-     is_list( SrcLst ) ->
+cnr( N, SrcLst ) when N > 0 ->
 
   Cnr = fun
           Cnr( 0, _, Acc )     -> [Acc];
@@ -68,9 +65,9 @@ when is_integer( N ), N > 0,
 %% @doc Enumerates all possible permutations by drawing one element from each
 %%      list value of a given map `SrcMap`.
 
--spec permut_map( #{ _ => [_] } ) -> [#{ _ => _ }].
+-spec permut_map( map() ) -> _.
 
-permut_map( SrcMap ) when is_map( SrcMap ) ->
+permut_map( SrcMap ) ->
 
   F = fun
         ( K, VLst, [] )  -> [#{ K => V } || V <- VLst];
