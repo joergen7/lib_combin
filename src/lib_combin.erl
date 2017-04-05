@@ -1,6 +1,6 @@
 %% -*- erlang -*-
 %%
-%% Copyright 2016 Jörgen Brandt
+%% Copyright 2016 Jorgen Brandt
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -18,11 +18,15 @@
 
 -module( lib_combin ).
 
-%% API exports
 -export( [cnr/1, cnr/2, permut_map/1] ).
 
--ifdef( TEST ).
--include_lib("eunit/include/eunit.hrl").
+-ifdef( EUNIT ).
+-include_lib( "eunit/include/eunit.hrl" ).
+-endif.
+
+-ifdef( EQC ).
+-export( [prop_cnr_duplicate_invariance/0] ).
+-include_lib( "eqc/include/eqc.hrl" ).
 -endif.
 
 
@@ -85,20 +89,11 @@ permut_map( SrcMap ) ->
 %% Internal functions
 %%====================================================================
 
-
-
-
-
-
-
-
-
-
 %%====================================================================
 %% Unit tests
 %%====================================================================
 
--ifdef( TEST ).
+-ifdef( EUNIT ).
 
 cnr_one_returns_n_elements_test() ->
   SrcLst = [a, b, c, d, e, f],
@@ -115,5 +110,25 @@ cnr_is_robust_wrt_duplicates_test() ->
 cnr_all_test() ->
   SrcLst = [a,b,c],
   ?assertEqual( 3+3+1, length( cnr( SrcLst ) ) ).
+
+-endif.
+
+-ifdef( EQC ).
+
+%%====================================================================
+%% EQC test generators
+%%====================================================================
+
+gen_lst() ->
+  list( elements( [a, b, c, d, e, f, g, h] ) ).
+
+%%====================================================================
+%% EQC properties
+%%====================================================================
+
+prop_cnr_duplicate_invariance() ->
+  ?FORALL( LargeLst, gen_lst(),
+    ?LET( SmallLst, lists:usort( LargeLst ),
+      cnr( LargeLst ) =:= cnr( SmallLst ) ) ).
 
 -endif.
