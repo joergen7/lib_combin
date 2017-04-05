@@ -14,7 +14,7 @@
 %% See the License for the specific language governing permissions and
 %% limitations under the License.
 
-%% @author Jörgen Brandt <joergen.brandt@onlinehome.de>
+%% @author Jorgen Brandt <joergen.brandt@onlinehome.de>
 
 -module( lib_combin ).
 
