@@ -33,7 +33,7 @@ when is_list( Omega ) ->
 
   F = fun( N ) -> cnr( N, Omega ) end,
 
-  lists:flatmap( F, down_to_1( length( Omega ), [] ) ).
+  lists:flatmap( F, lists:seq( 1, length( Omega ) ) ).
 
 
 -spec cnr( N::pos_integer(), Omega::[_] ) -> [[_]].
@@ -73,15 +73,7 @@ when is_integer( N ), N > 0,
     [_|_] -> cnr( N-1, T, [H|Acc] )++cnr( N, T, Acc )
   end.
   
--spec down_to_1( N::non_neg_integer(), Acc::[pos_integer()] ) -> [pos_integer()].
 
-down_to_1( 0, Acc ) ->
-  Acc;
-
-down_to_1( N, Acc )
-when is_integer( N ), N > 0,
-     is_list( Acc ) ->
-  down_to_1( N-1, [N|Acc] ).
 
 
 

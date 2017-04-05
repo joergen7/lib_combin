@@ -1,5 +1,5 @@
 {application, combin,
- [{description, "An OTP library"},
+ [{description, "Basic combinatorics for Erlang lists"},
   {vsn, "0.1.0-snapshot"},
   {registered, []},
   {applications,
@@ -7,7 +7,7 @@
     stdlib
    ]},
   {env,[]},
-  {modules, []},
+  {modules, [combin]},
 
   {maintainers, []},
   {licenses, []},
