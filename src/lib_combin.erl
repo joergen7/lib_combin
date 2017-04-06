@@ -18,7 +18,7 @@
 
 -module( lib_combin ).
 
--export( [cnr/1, cnr/2, permut_map/1] ).
+-export( [cnr/1, cnr/2, permut_map/1, pick/1] ).
 
 -ifdef( EUNIT ).
 -include_lib( "eunit/include/eunit.hrl" ).
@@ -83,6 +83,16 @@ permut_map( SrcMap ) ->
       end,
 
   maps:fold( G, [], maps:map( F, SrcMap ) ).
+
+
+%% @doc Picks a random element from a given list.
+
+-spec pick( [_] ) -> _.
+
+pick( SrcLst ) ->
+  SrcLst1 = lists:usort( SrcLst ),
+  N = random:uniform( length( SrcLst1 ) ),
+  lists:nth( N, SrcLst1 ).
 
 
 %%====================================================================
