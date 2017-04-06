@@ -11,5 +11,5 @@
 
   {maintainers, ["Jorgen Brandt <joergen.brandt@onlinehome.de>"]},
   {licenses, ["Apache 2.0"]},
-  {links, ["https://github.com/joergen7/combin"]}
+  {links, []}
  ]}.
