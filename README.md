@@ -2,4 +2,4 @@
 
 Basic combinatorics for Erlang lists.
 
-    rebar3 do eunit, dialyzer, eqc
+    rebar3 compile

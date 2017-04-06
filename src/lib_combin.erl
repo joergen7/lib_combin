@@ -46,8 +46,8 @@ cnr( SrcLst ) ->
   lists:flatmap( F, lists:seq( 1, length( SrcLst ) ) ).
 
 
-%% @doc Enumerates all combinations of length `N` without replacement by drawing
-%%      elements from a list.
+%% @doc Enumerates all combinations of length N without replacement by drawing
+%%      elements from a given list SrcLst.
 
 -spec cnr( N::_, SrcLst::[_] ) -> [[_]].
 
@@ -67,7 +67,7 @@ cnr( N, SrcLst ) when N > 0 ->
 
 
 %% @doc Enumerates all possible permutations by drawing one element from each
-%%      list value of a given map `SrcMap`.
+%%      list value of a given map SrcMap.
 
 -spec permut_map( map() ) -> _.
 
