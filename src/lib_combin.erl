@@ -89,9 +89,9 @@ permut_map( SrcMap ) ->
 
 -spec pick( [_] ) -> _.
 
-pick( SrcLst ) ->
+pick( SrcLst=[_|_] ) ->
   SrcLst1 = lists:usort( SrcLst ),
-  N = random:uniform( length( SrcLst1 ) ),
+  N = rand:uniform( length( SrcLst1 ) ),
   lists:nth( N, SrcLst1 ).
 
 
