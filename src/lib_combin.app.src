@@ -9,7 +9,10 @@
   {env,[]},
   {modules, [lib_combin]},
 
-  {maintainers, ["Jorgen Brandt <joergen.brandt@onlinehome.de>"]},
+  {maintainers, ["Jorgen Brandt"]},
   {licenses, ["Apache 2.0"]},
-  {links, [{"GitHub", "https://github.com/joergen7/lib_combin"}]}
+  {links, [
+           {"GitHub", "https://github.com/joergen7/lib_combin"},
+           {"Docs", "https://cuneiform-lang.org/man/lib_combin/index.html"}
+          ]}
  ]}.
