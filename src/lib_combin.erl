@@ -43,7 +43,7 @@ cnr( SrcLst ) ->
 
   F = fun( N ) -> cnr( N, SrcLst ) end,
 
-  lists:flatmap( F, lists:seq( 1, length( SrcLst ) ) ).
+  lists:flatmap( F, lists:seq( 0, length( SrcLst ) ) ).
 
 
 %% @doc Enumerates all combinations of length N without replacement by drawing
@@ -51,7 +51,7 @@ cnr( SrcLst ) ->
 
 -spec cnr( N::_, SrcLst::[_] ) -> [[_]].
 
-cnr( N, SrcLst ) when N > 0 ->
+cnr( N, SrcLst ) when N >= 0 ->
 
   Cnr = fun
           Cnr( 0, _, Acc )     -> [Acc];
