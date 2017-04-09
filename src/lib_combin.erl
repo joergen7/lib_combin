@@ -24,11 +24,6 @@
 -include_lib( "eunit/include/eunit.hrl" ).
 -endif.
 
--ifdef( EQC ).
--export( [prop_cnr_duplicate_invariance/0] ).
--include_lib( "eqc/include/eqc.hrl" ).
--endif.
-
 
 %%====================================================================
 %% API functions
@@ -123,22 +118,3 @@ cnr_all_test() ->
 
 -endif.
 
--ifdef( EQC ).
-
-%%====================================================================
-%% EQC test generators
-%%====================================================================
-
-gen_lst() ->
-  list( elements( [a, b, c, d, e, f, g, h] ) ).
-
-%%====================================================================
-%% EQC properties
-%%====================================================================
-
-prop_cnr_duplicate_invariance() ->
-  ?FORALL( LargeLst, gen_lst(),
-    ?LET( SmallLst, lists:usort( LargeLst ),
-      cnr( LargeLst ) =:= cnr( SmallLst ) ) ).
-
--endif.
