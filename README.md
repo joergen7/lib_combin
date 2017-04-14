@@ -50,7 +50,7 @@ Say, we're leading a burger restaurant which serves burgers made up from a fixed
 
     Ingredients = #{ sauce => [ketchup, mayo],
                      bread => [sesame, plain],
-                     meat => [beef, chicken, mutton] }
+                     meat  => [beef, chicken, mutton] }
 
 To find out which burgers can appear on the menu, we use the function `permut_map/1` as follows:
 
