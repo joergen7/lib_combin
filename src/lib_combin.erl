@@ -31,8 +31,8 @@
 %% API functions
 %%====================================================================
 
-%% @doc Enumerates all combinations with any possible length without replacement
-%%      by drawing elements from `SrcLst'.
+%% @doc Enumerates all combinations (order does not matter) with any possible
+%%      length without replacement by drawing elements from `SrcLst'.
 %%
 %%      Example:
 %%      ```
@@ -48,8 +48,8 @@ cnr_all( SrcLst ) ->
   lists:flatmap( F, lists:seq( 0, length( SrcLst ) ) ).
 
 
-%% @doc Enumerates all combinations of length `N' without replacement by drawing
-%%      elements from `SrcLst'.
+%% @doc Enumerates all combinations (order does not matter) of length `N'
+%%      without replacement by drawing elements from `SrcLst'.
 %%
 %%      Example:
 %%      ```
@@ -73,8 +73,8 @@ cnr( N, SrcLst ) when N >= 0 ->
   Cnr( N, lists:usort( SrcLst ), [] ).
 
 
-%% @doc Enumerates all variations of length `N' without replacement by drawing
-%%      elements from `SrcLst'.
+%% @doc Enumerates all variations (order matters) of length `N' without
+%%      replacement by drawing elements from `SrcLst'.
 %%
 %%      Example:
 %%      ```
@@ -95,7 +95,8 @@ vnr( N, SrcLst ) when N >= 0 ->
 
   Variat( N, lists:usort( SrcLst ), [] ).
 
-%% @doc Enumerates all permutations by drawing elements from `SrcLst'.
+%% @doc Enumerates all permutations (order matters) without replacement by
+%%      drawing elements from `SrcLst'.
 %%
 %%      Example:
 %%      ```
