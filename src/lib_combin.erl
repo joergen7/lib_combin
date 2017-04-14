@@ -188,7 +188,7 @@ cnr_is_robust_wrt_duplicates_test() ->
 
 cnr_all_test() ->
   SrcLst = [a,b,c],
-  ?assertEqual( 1+3+3+1, length( cnr( SrcLst ) ) ).
+  ?assertEqual( 1+3+3+1, length( cnr_all( SrcLst ) ) ).
 
 -endif.
 
