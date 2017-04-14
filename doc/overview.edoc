@@ -1,0 +1,7 @@
+@author Jorgen Brandt <joergen.brandt@onlinehome.de>
+@copyright 2016 Jorgen Brandt
+@version 0.1.1
+@title Basic combinatorics for Erlang lists and maps.
+@doc
+
+This library provides basic combinatoric operations like permutation or combinations without replacement for the most common data structures in Erlang: lists and maps.

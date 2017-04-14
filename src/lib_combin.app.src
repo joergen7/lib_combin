@@ -1,5 +1,5 @@
 {application, lib_combin,
- [{description, "Basic combinatorics for Erlang lists."},
+ [{description, "Basic combinatorics for Erlang lists and maps."},
   {vsn, "0.1.2"},
   {registered, []},
   {applications,

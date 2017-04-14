@@ -1,6 +1,8 @@
-# lib_combin: Basic combinatorics for Erlang lists [![hex.pm](https://img.shields.io/hexpm/v/lib_combin.svg?style=flat-square)](https://hex.pm/packages/lib_combin) [![Build Status](https://travis-ci.org/joergen7/lib_combin.svg?branch=dev)](https://travis-ci.org/joergen7/lib_combin)
+# Basic combinatorics for Erlang lists and maps.
 
-????
+[![hex.pm](https://img.shields.io/hexpm/v/lib_combin.svg?style=flat-square)](https://hex.pm/packages/lib_combin) [![Build Status](https://travis-ci.org/joergen7/lib_combin.svg?branch=dev)](https://travis-ci.org/joergen7/lib_combin)
+
+This library provides basic combinatoric operations like permutation or combinations without replacement for the most common data structures in Erlang: lists and maps.
 
 # Adding lib_combin to a Project
 
@@ -18,9 +20,14 @@ To integrate `lib_combin` into a rebar3 managed project change the `deps` entry 
 
 The [documentation](https://cuneiform-lang.org/man/lib_combin/index.html) of the `lib_combin` module's API is available online.
 
-# Usage
+# Examples
 
-????
+## Combinations without replacement
+
+To enumerate all combinations (order does not matter) without replacement of length 2 by drawing from the list `[a, b, c]` we use the `cnr/2` function as follows:
+
+    lib_combin:cnr( 2, [a, b, c] ).
+    [[b,a],[c,a],[c,b]]
 
 
 # Resources

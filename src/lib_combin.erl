@@ -1,5 +1,7 @@
 %% -*- erlang -*-
 %%
+%% Basic combinatorics for Erlang lists and maps.
+%%
 %% Copyright 2016 Jorgen Brandt
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +20,7 @@
 
 -module( lib_combin ).
 
--export( [cnr/1, cnr/2, permut_map/1, pick_from/1] ).
+-export( [cnr_all/1, cnr/2, pnr/1, permut_map/1, pick_from/1, vnr/2] ).
 
 -ifdef( EUNIT ).
 -include_lib( "eunit/include/eunit.hrl" ).
@@ -29,21 +31,31 @@
 %% API functions
 %%====================================================================
 
-%% @doc Enumerates all possible combinations without replacement by drawing
-%%      elements from a list.
+%% @doc Enumerates all combinations with any possible length without replacement
+%%      by drawing elements from `SrcLst'.
+%%
+%%      Example:
+%%      ```
+%%      lib_combin:cnr_all( [a,b,c] ).
+%%      [[],[a],[b],[c],[b,a],[c,a],[c,b],[c,b,a]]
+%%      '''
+-spec cnr_all( SrcLst::[_] ) -> [[_]].
 
--spec cnr( SrcLst::[_] ) -> [[_]].
-
-cnr( SrcLst ) ->
+cnr_all( SrcLst ) ->
 
   F = fun( N ) -> cnr( N, SrcLst ) end,
 
   lists:flatmap( F, lists:seq( 0, length( SrcLst ) ) ).
 
 
-%% @doc Enumerates all combinations of length N without replacement by drawing
-%%      elements from a given list SrcLst.
-
+%% @doc Enumerates all combinations of length `N' without replacement by drawing
+%%      elements from `SrcLst'.
+%%
+%%      Example:
+%%      ```
+%%      lib_combin:cnr( 2, [a,b,c] ).
+%%      [[b,a],[c,a],[c,b]]
+%%      '''
 -spec cnr( N::_, SrcLst::[_] ) -> [[_]].
 
 cnr( N, SrcLst ) when N >= 0 ->
@@ -61,8 +73,63 @@ cnr( N, SrcLst ) when N >= 0 ->
   Cnr( N, lists:usort( SrcLst ), [] ).
 
 
+%% @doc Enumerates all variations of length `N' without replacement by drawing
+%%      elements from `SrcLst'.
+%%
+%%      Example:
+%%      ```
+%%      lib_combin:vnr( 2, [a,b,c] ).
+%%      [[b,a],[c,a],[a,b],[c,b],[a,c],[b,c]]
+%%      '''
+
+-spec vnr( N::_, SrcLst::[_] ) -> [[_]].
+
+vnr( N, SrcLst ) when N >= 0 ->
+
+  Variat = fun
+           Variat( 0, _, Acc ) ->
+             [Acc];
+           Variat( M, S, Acc ) ->
+             lists:flatmap( fun( X ) -> Variat( M-1, S--[X], [X|Acc] ) end, S )
+         end,
+
+  Variat( N, lists:usort( SrcLst ), [] ).
+
+%% @doc Enumerates all permutations by drawing elements from `SrcLst'.
+%%
+%%      Example:
+%%      ```
+%%      lib_combin:pnr( [a,b,c] ).
+%%      [[c,b,a],[b,c,a],[c,a,b],[a,c,b],[b,a,c],[a,b,c]]
+%%      '''
+
+-spec pnr( SrcLst::[_] ) -> [[_]].
+
+pnr( SrcLst ) ->
+  SrcLst1 = lists:usort( SrcLst ),
+  vnr( length( SrcLst1 ), SrcLst1 ).
+
+
+
 %% @doc Enumerates all possible permutations by drawing one element from each
-%%      list value of a given map SrcMap.
+%%      list value of a given map `SrcMap'.
+%%
+%%      Example:
+%%      ```
+%%      lib_combin:permut_map( #{ sauce => [ketchup, mayo], bread => [sesame, plain], meat => [beef, chicken, mutton] } ).
+%%      [#{bread => plain,meat => beef,sauce => ketchup},
+%%       #{bread => sesame,meat => beef,sauce => ketchup},
+%%       #{bread => plain,meat => chicken,sauce => ketchup},
+%%       #{bread => sesame,meat => chicken,sauce => ketchup},
+%%       #{bread => plain,meat => mutton,sauce => ketchup},
+%%       #{bread => sesame,meat => mutton,sauce => ketchup},
+%%       #{bread => plain,meat => beef,sauce => mayo},
+%%       #{bread => sesame,meat => beef,sauce => mayo},
+%%       #{bread => plain,meat => chicken,sauce => mayo},
+%%       #{bread => sesame,meat => chicken,sauce => mayo},
+%%       #{bread => plain,meat => mutton,sauce => mayo},
+%%       #{bread => sesame,meat => mutton,sauce => mayo}]
+%%      '''
 
 -spec permut_map( map() ) -> _.
 
@@ -81,6 +148,12 @@ permut_map( SrcMap ) ->
 
 
 %% @doc Picks a random element from a given list.
+%%
+%%      Example:
+%%      ```
+%%      pick_from( [a,b,c] ).
+%%      c
+%%      '''
 
 -spec pick_from( [_] ) -> _.
 
