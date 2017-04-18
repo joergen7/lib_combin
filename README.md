@@ -70,6 +70,13 @@ To find out which burgers can appear on the menu, we use the function `permut_ma
      #{bread => plain,meat => mutton,sauce => mayo},
      #{bread => sesame,meat => mutton,sauce => mayo}]
 
+#### Factorial
+
+The library also contains an implementation of the factorial function.
+
+    lib_combin:fac( 4 ).
+    24
+
 ## System Requirements
 
 - Erlang OTP 18.0 or higher
