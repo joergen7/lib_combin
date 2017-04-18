@@ -70,6 +70,11 @@ To find out which burgers can appear on the menu, we use the function `permut_ma
      #{bread => plain,meat => mutton,sauce => mayo},
      #{bread => sesame,meat => mutton,sauce => mayo}]
 
+## System Requirements
+
+- Erlang OTP 18.0 or higher
+- Rebar3 3.0.0 or higher
+
 ## Resources
 
 - [seantanly/elixir-combination](https://github.com/seantanly/elixir-combination). An alternative library for combinations and permutations in Elixir.
