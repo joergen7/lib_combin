@@ -17,7 +17,7 @@
 %% limitations under the License.
 
 %% @author Jorgen Brandt <joergen.brandt@onlinehome.de>
-%% @version 0.1.4
+%% @version 0.1.5
 %% @copyright 2016-2017 Jorgen Brandt
 
 -module( lib_combin ).
@@ -62,7 +62,7 @@ cnr_all( SrcLst ) ->
 %%      '''
 -spec cnr( N::_, SrcLst::[_] ) -> [[_]].
 
-cnr( N, SrcLst ) when N >= 0, N =< length( SrcLst ) ->
+cnr( N, SrcLst ) when N >= 0 ->
 
   Cnr = fun
           Cnr( 0, _, Acc )     -> [Acc];
@@ -90,7 +90,7 @@ cnr( N, SrcLst ) when N >= 0, N =< length( SrcLst ) ->
 
 -spec vnr( N::_, SrcLst::[_] ) -> [[_]].
 
-vnr( N, SrcLst ) when N >= 0, N =< length( SrcLst ) ->
+vnr( N, SrcLst ) when N >= 0 ->
 
   Variat = fun
            Variat( 0, _, Acc ) ->
@@ -204,9 +204,9 @@ cnr_neg_throws_error_test() ->
   SrcLst = [a, b, c, d, e, f],
   ?assertError( function_clause, cnr( -1, SrcLst ) ).
 
-cnr_too_large_throws_error_test() ->
+cnr_too_large_returns_empty_list_test() ->
   SrcLst = [a, b, c, d, e, f],
-  ?assertError( function_clause, cnr( 7, SrcLst ) ).
+  ?assertEqual( [], cnr( 7, SrcLst ) ).
 
 cnr_all_test() ->
   SrcLst = [a,b,c],
@@ -228,11 +228,11 @@ vnr_neg_throws_error_test() ->
   SrcLst = [a, b, c, d, e, f],
   ?assertError( function_clause, vnr( -1, SrcLst ) ).
 
-vnr_too_large_throws_error_test() ->
+vnr_too_large_returns_empty_list_test() ->
   SrcLst = [a, b, c, d, e, f],
-  ?assertError( function_clause, vnr( 7, SrcLst ) ).
+  ?assertEqual( [], vnr( 7, SrcLst ) ).
 
-permut_empty_map_returns_empty_list_test() ->
+permut_empty_map_returns_empty_map_singleton_test() ->
   ?assertEqual( [#{}], permut_map( #{} ) ).
 
 permut_map_containing_single_empty_list_returns_empty_list_test() ->
@@ -245,7 +245,7 @@ burger_restaurant_example_test() ->
 
   IngredientMap = #{ sauce => [ketchup, mayo],
                      bread => [sesame, plain],
-                     meat => [beef, chicken, mutton] },
+                     meat  => [beef, chicken, mutton] },
 
   ExpectedLst = [
                  #{bread => sesame,meat => beef,sauce => ketchup},

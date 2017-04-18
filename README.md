@@ -12,13 +12,13 @@ The [documentation](https://cuneiform-lang.org/man/lib_combin/index.html) of the
 
 #### rebar3
 
-To integrate `lib_combin` into a rebar3 managed project change the `deps` entry in your application's `rebar.config` file to include the tuple `{lib_combin, "0.1.4"}`.
+To integrate `lib_combin` into a rebar3 managed project change the `deps` entry in your application's `rebar.config` file to include the tuple `{lib_combin, "0.1.5"}`.
 
-    {deps, [{lib_combin, "0.1.4"}]}.
+    {deps, [{lib_combin, "0.1.5"}]}.
 
 #### mix
 
-    {:lib_combin, "~> 0.1.4"}
+    {:lib_combin, "~> 0.1.5"}
 
 ### Examples
 
