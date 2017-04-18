@@ -77,6 +77,7 @@ To find out which burgers can appear on the menu, we use the function `permut_ma
 
 ## Resources
 
+- [joergen7/gen_pnet](https://github.com/joergen7/gen_pnet) A generic Petri net OTP behavior using `lib_combin` to enumerate transition firing modes.
 - [seantanly/elixir-combination](https://github.com/seantanly/elixir-combination). An alternative library for combinations and permutations in Elixir.
 
 ## Authors
