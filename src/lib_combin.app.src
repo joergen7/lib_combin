@@ -1,6 +1,6 @@
 {application, lib_combin,
  [{description, "Basic combinatorics for Erlang lists and maps."},
-  {vsn, "0.1.3"},
+  {vsn, "0.1.4"},
   {registered, []},
   {applications,
    [kernel,

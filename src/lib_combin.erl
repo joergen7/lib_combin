@@ -17,7 +17,7 @@
 %% limitations under the License.
 
 %% @author Jorgen Brandt <joergen.brandt@onlinehome.de>
-%% @version 0.1.3
+%% @version 0.1.4
 %% @copyright 2016-2017 Jorgen Brandt
 
 -module( lib_combin ).
