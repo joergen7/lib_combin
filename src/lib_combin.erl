@@ -74,7 +74,7 @@ cnr( N, SrcLst ) when N >= 0, N =< length( SrcLst ) ->
             end
         end,
      
-  Cnr( N, lists:usort( SrcLst ), [] ).
+  Cnr( N, SrcLst, [] ).
 
 
 %% @doc Enumerates all variations (order matters) of length `N' without
@@ -99,7 +99,7 @@ vnr( N, SrcLst ) when N >= 0, N =< length( SrcLst ) ->
              lists:flatmap( fun( X ) -> Variat( M-1, S--[X], [X|Acc] ) end, S )
          end,
 
-  Variat( N, lists:usort( SrcLst ), [] ).
+  Variat( N, SrcLst, [] ).
 
 %% @doc Enumerates all permutations (order matters) without replacement by
 %%      drawing elements from `SrcLst'.
@@ -113,8 +113,7 @@ vnr( N, SrcLst ) when N >= 0, N =< length( SrcLst ) ->
 -spec pnr( SrcLst::[_] ) -> [[_]].
 
 pnr( SrcLst ) ->
-  SrcLst1 = lists:usort( SrcLst ),
-  vnr( length( SrcLst1 ), SrcLst1 ).
+  vnr( length( SrcLst ), SrcLst ).
 
 
 
@@ -142,15 +141,11 @@ pnr( SrcLst ) ->
 
 permut_map( SrcMap ) ->
 
-  F = fun( _, VLst ) ->
-        lists:usort( VLst )
-  end,
-
   G = fun( K, VLst, Acc ) ->
         [A#{ K => V } || V <- VLst, A <- Acc]
       end,
 
-  maps:fold( G, [#{}], maps:map( F, SrcMap ) ).
+  maps:fold( G, [#{}], SrcMap ).
 
 
 %% @doc Picks a random element from a given list.
@@ -205,10 +200,6 @@ cnr_zero_is_degenerate_but_valid_test() ->
   SrcLst = [a, b, c, d, e, f],
   ?assertEqual( [[]], cnr( 0, SrcLst ) ).
 
-cnr_is_robust_wrt_duplicates_test() ->
-  SrcLst = [a, b, c, d, e, f, f, e, b],
-  ?assertEqual( 1, length( cnr( 6, SrcLst ) ) ).
-
 cnr_neg_throws_error_test() ->
   SrcLst = [a, b, c, d, e, f],
   ?assertError( function_clause, cnr( -1, SrcLst ) ).
@@ -233,10 +224,6 @@ vnr_zero_is_degenerate_but_valid_test() ->
   SrcLst = [a, b, c, d, e, f],
   ?assertEqual( [[]], vnr( 0, SrcLst ) ).
 
-vnr_is_robust_wrt_duplicates_test() ->
-  SrcLst = [a, b, c, d, e, f, f, e, b],
-  ?assertEqual( fac( 6 ), length( vnr( 6, SrcLst ) ) ).
-
 vnr_neg_throws_error_test() ->
   SrcLst = [a, b, c, d, e, f],
   ?assertError( function_clause, vnr( -1, SrcLst ) ).
@@ -244,10 +231,6 @@ vnr_neg_throws_error_test() ->
 vnr_too_large_throws_error_test() ->
   SrcLst = [a, b, c, d, e, f],
   ?assertError( function_clause, vnr( 7, SrcLst ) ).
-
-pnr_is_robust_wrt_duplicates_test() ->
-  SrcLst = [a, b, c, d, e, f, f, e, b],
-  ?assertEqual( fac( 6 ), length( pnr( SrcLst ) ) ).
 
 permut_empty_map_returns_empty_list_test() ->
   ?assertEqual( [#{}], permut_map( #{} ) ).
@@ -264,18 +247,19 @@ burger_restaurant_example_test() ->
                      bread => [sesame, plain],
                      meat => [beef, chicken, mutton] },
 
-  ExpectedLst = [#{bread => plain,meat => beef,sauce => ketchup},
+  ExpectedLst = [
                  #{bread => sesame,meat => beef,sauce => ketchup},
-                 #{bread => plain,meat => chicken,sauce => ketchup},
+                 #{bread => plain,meat => beef,sauce => ketchup},
                  #{bread => sesame,meat => chicken,sauce => ketchup},
-                 #{bread => plain,meat => mutton,sauce => ketchup},
+                 #{bread => plain,meat => chicken,sauce => ketchup},
                  #{bread => sesame,meat => mutton,sauce => ketchup},
-                 #{bread => plain,meat => beef,sauce => mayo},
+                 #{bread => plain,meat => mutton,sauce => ketchup},
                  #{bread => sesame,meat => beef,sauce => mayo},
-                 #{bread => plain,meat => chicken,sauce => mayo},
+                 #{bread => plain,meat => beef,sauce => mayo},
                  #{bread => sesame,meat => chicken,sauce => mayo},
-                 #{bread => plain,meat => mutton,sauce => mayo},
-                 #{bread => sesame,meat => mutton,sauce => mayo}],
+                 #{bread => plain,meat => chicken,sauce => mayo},
+                 #{bread => sesame,meat => mutton,sauce => mayo},
+                 #{bread => plain,meat => mutton,sauce => mayo}],
 
   Result =  lib_combin:permut_map( IngredientMap ),
 
