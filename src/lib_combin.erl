@@ -146,12 +146,11 @@ permut_map( SrcMap ) ->
         lists:usort( VLst )
   end,
 
-  G = fun
-        ( K, VLst, [] )  -> [#{ K => V } || V <- VLst];
-        ( K, VLst, Acc ) -> [A#{ K => V } || V <- VLst, A <- Acc]
+  G = fun( K, VLst, Acc ) ->
+        [A#{ K => V } || V <- VLst, A <- Acc]
       end,
 
-  maps:fold( G, [], maps:map( F, SrcMap ) ).
+  maps:fold( G, [#{}], maps:map( F, SrcMap ) ).
 
 
 %% @doc Picks a random element from a given list.
@@ -249,6 +248,15 @@ vnr_too_large_throws_error_test() ->
 pnr_is_robust_wrt_duplicates_test() ->
   SrcLst = [a, b, c, d, e, f, f, e, b],
   ?assertEqual( fac( 6 ), length( pnr( SrcLst ) ) ).
+
+permut_empty_map_returns_empty_list_test() ->
+  ?assertEqual( [#{}], permut_map( #{} ) ).
+
+permut_map_containing_single_empty_list_returns_empty_list_test() ->
+  ?assertEqual( [], permut_map( #{ b => [] } ) ).
+
+permut_map_containing_empty_list_returns_empty_list_test() ->
+  ?assertEqual( [], permut_map( #{ a => [x, y], b => [], c => [m, n] } ) ).
 
 burger_restaurant_example_test() ->
 
