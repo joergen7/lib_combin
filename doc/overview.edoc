@@ -1,6 +1,6 @@
-@author Jorgen Brandt <joergen.brandt@onlinehome.de>
-@copyright 2016 Jorgen Brandt
-@version 0.1.5
+@author Jörgen Brandt <joergen.brandt@onlinehome.de>
+@copyright 2016-2017 Jörgen Brandt
+@version 0.1.6
 @title Basic combinatorics for Erlang lists and maps.
 @doc
 
