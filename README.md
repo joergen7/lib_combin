@@ -1,6 +1,6 @@
 # lib_combin
 ###### Basic combinatorics for Erlang lists and maps.
-[![hex.pm](https://img.shields.io/hexpm/v/lib_combin.svg?style=flat-square)](https://hex.pm/packages/lib_combin) [![Build Status](https://travis-ci.org/joergen7/lib_combin.svg?branch=master)](https://travis-ci.org/joergen7/lib_combin)
+[![hex.pm](https://img.shields.io/hexpm/v/lib_combin.svg?style=flat-square)](https://hex.pm/packages/lib_combin)
 
 This library provides basic combinatoric operations like permutation or combinations without replacement for the most common data structures in Erlang: lists and maps.
 

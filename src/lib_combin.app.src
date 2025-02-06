@@ -4,15 +4,11 @@
   {registered, []},
   {applications,
    [kernel,
-    stdlib
-   ]},
-  {env,[]},
+    stdlib]},
+  {env, []},
   {modules, [lib_combin]},
 
   {maintainers, ["Jorgen Brandt"]},
   {licenses, ["Apache 2.0"]},
-  {links, [
-           {"GitHub", "https://github.com/joergen7/lib_combin"},
-           {"Docs", "https://cuneiform-lang.org/man/lib_combin/index.html"}
-          ]}
- ]}.
+  {links, [{"GitHub", "https://github.com/joergen7/lib_combin"},
+           {"Docs", "https://cuneiform-lang.org/man/lib_combin/index.html"}]}]}.
