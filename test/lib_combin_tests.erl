@@ -60,14 +60,14 @@ vnr_too_large_returns_empty_list_test() ->
 
 
 pnr_test() ->
-    Result = lib_combin:pnr( [a,b,c] ),
+    Result = lib_combin:pnr([a, b, c]),
     ?assertEqual(6, length(Result)),
-    ?assert(lists:member([c,b,a], Result)),
-    ?assert(lists:member([b,c,a], Result)),
-    ?assert(lists:member([c,a,b], Result)),
-    ?assert(lists:member([a,c,b], Result)),
-    ?assert(lists:member([b,a,c], Result)),
-    ?assert(lists:member([a,b,c], Result)).
+    ?assert(lists:member([c, b, a], Result)),
+    ?assert(lists:member([b, c, a], Result)),
+    ?assert(lists:member([c, a, b], Result)),
+    ?assert(lists:member([a, c, b], Result)),
+    ?assert(lists:member([b, a, c], Result)),
+    ?assert(lists:member([a, b, c], Result)).
 
 
 permut_empty_map_returns_empty_map_singleton_test() ->
